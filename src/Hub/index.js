@@ -137,7 +137,6 @@ function Character(props) {
     const classes = useStyles();
 
     let isMe = props.name == myName;
-    console.log(props)
     let amDM = hubInfo.characters.find(c => c.name == myName).id == 'thedm';
 
     return (
