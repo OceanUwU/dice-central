@@ -137,6 +137,7 @@ function Character(props) {
     const classes = useStyles();
 
     let isMe = props.name == myName;
+    let amDM = props.id == 'thedm';
 
     return (
         <div className={classes.character}>
@@ -153,9 +154,9 @@ function Character(props) {
                 ) : null}
             </div>
             <div className="buttons">
-                <IconButton title="character info" onClick={() => showCharacterDialog(props, isMe, 0)}><RecentActorsIcon fontSize="small" /></IconButton>
-                <IconButton title="inventory" onClick={() => showCharacterDialog(props, isMe, 1)}><LocalMallIcon fontSize="small" /></IconButton>
-                {isMe ? <IconButton title="personal notes" onClick={() => showCharacterDialog(props, isMe, 2)}><NoteIcon fontSize="small" /></IconButton> : null}
+                <IconButton title="character info" onClick={() => showCharacterDialog(props, isMe || amDM, 0)}><RecentActorsIcon fontSize="small" /></IconButton>
+                <IconButton title="inventory" onClick={() => showCharacterDialog(props, isMe || amDM, 1)}><LocalMallIcon fontSize="small" /></IconButton>
+                {isMe ? <IconButton title="personal notes" onClick={() => showCharacterDialog(props, isMe || amDM, 2)}><NoteIcon fontSize="small" /></IconButton> : null}
             </div>
         </div>
     );

@@ -72,30 +72,30 @@ function DialogCentre(props) {
                 }}
             >
                 <Tab className={classes.tab} label="Info" />
-                <Tab className={classes.tab} label="Inventory" />
-                {props.self ? <Tab className={classes.tab} label="Notes" /> : null}
-                {props.self ? <Tab className={classes.tab} label="Portrait" /> : null}
+                {props.seeAll ? <Tab className={classes.tab} label="Inventory" /> : null}
+                {props.seeAll ? <Tab className={classes.tab} label="Notes" /> : null}
+                {props.seeAll ? <Tab className={classes.tab} label="Portrait" /> : null}
             </Tabs>
             <TabPanel classes={classes.tabPanel} value={value} index={0}>
                 <iframe name="embed_readwrite" className={classes.pad} src={`${etherpadserver}/p/${props.character.id}_info`}></iframe>
             </TabPanel>
-            <TabPanel classes={classes.tabPanel} value={value} index={1}>
+            {props.seeAll ? <TabPanel classes={classes.tabPanel} value={value} index={1}>
                 <iframe name="embed_readwrite" className={classes.pad} src={`${etherpadserver}/p/${props.character.id}_inv`}></iframe>
-            </TabPanel>
-            {props.self ? <TabPanel classes={classes.tabPanel} value={value} index={2}>
+            </TabPanel> : null}
+            {props.seeAll ? <TabPanel classes={classes.tabPanel} value={value} index={2}>
                 <iframe name="embed_readwrite" className={classes.pad} src={`${etherpadserver}/p/${props.character.id}_notes`}></iframe>
             </TabPanel> : null}
-            {props.self ? <TabPanel classes={classes.tabPanel} value={value} index={3}>
+            {props.seeAll ? <TabPanel classes={classes.tabPanel} value={value} index={3}>
                 <PortraitEditor {...props.character} />
             </TabPanel> : null}
         </div>
     );
 };
 
-function showCharacterDialog(character, self, startingValue) {
+function showCharacterDialog(character, seeAll, startingValue) {
     showDialog({
         title: character.name
-    }, <DialogCentre character={character} self={self} startingValue={startingValue} />);
+    }, <DialogCentre character={character} seeAll={seeAll} startingValue={startingValue} />);
 }
 
 export default showCharacterDialog;
