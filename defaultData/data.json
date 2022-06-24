@@ -1,0 +1,12 @@
+{
+    "characters": [{
+        "id": "thedm",
+        "name": "DM",
+        "owner": "???",
+        "portraits": ["emptychar.png", "pencil.png"],
+        "portraitSelected": 1,
+        "dice": []
+    }],
+    "pads": ["Log", "Notes"],
+    "openPads": ["Log", "Notes"]
+}
