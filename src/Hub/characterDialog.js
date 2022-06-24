@@ -72,30 +72,30 @@ function DialogCentre(props) {
                 }}
             >
                 <Tab className={classes.tab} label="Info" />
-                {props.seeAll ? <Tab className={classes.tab} label="Inventory" /> : null}
-                {props.seeAll ? <Tab className={classes.tab} label="Notes" /> : null}
-                {props.seeAll ? <Tab className={classes.tab} label="Portrait" /> : null}
+                {props.self || props.amDM ? <Tab className={classes.tab} label="Inventory" /> : null}
+                {props.self || props.amDM ? <Tab className={classes.tab} label="Notes" /> : null}
+                {props.self ? <Tab className={classes.tab} label="Portrait" /> : null}
             </Tabs>
             <TabPanel classes={classes.tabPanel} value={value} index={0}>
                 <iframe name="embed_readwrite" className={classes.pad} src={`${etherpadserver}/p/${props.character.id}_info`}></iframe>
             </TabPanel>
-            {props.seeAll ? <TabPanel classes={classes.tabPanel} value={value} index={1}>
+            {props.self || props.amDM ? <TabPanel classes={classes.tabPanel} value={value} index={1}>
                 <iframe name="embed_readwrite" className={classes.pad} src={`${etherpadserver}/p/${props.character.id}_inv`}></iframe>
             </TabPanel> : null}
-            {props.seeAll ? <TabPanel classes={classes.tabPanel} value={value} index={2}>
+            {props.self || props.amDM ? <TabPanel classes={classes.tabPanel} value={value} index={2}>
                 <iframe name="embed_readwrite" className={classes.pad} src={`${etherpadserver}/p/${props.character.id}_notes`}></iframe>
             </TabPanel> : null}
-            {props.seeAll ? <TabPanel classes={classes.tabPanel} value={value} index={3}>
+            {props.self ? <TabPanel classes={classes.tabPanel} value={value} index={3}>
                 <PortraitEditor {...props.character} />
             </TabPanel> : null}
         </div>
     );
 };
 
-function showCharacterDialog(character, seeAll, startingValue) {
+function showCharacterDialog(character, self, amDM, startingValue) {
     showDialog({
         title: character.name
-    }, <DialogCentre character={character} seeAll={seeAll} startingValue={startingValue} />);
+    }, <DialogCentre character={character} self={self} amDM={amDM} startingValue={startingValue} />);
 }
 
 export default showCharacterDialog;
