@@ -4,8 +4,20 @@ import { makeStyles } from '@material-ui/core/styles';
 import showDialog from '../Dialog/show';
 import socket from '../socket';
 import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme) => ({
+    portraitsLlist: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-evenly',
+    },
+    portraitContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
     portrait: {
         width: 100,
         height: 100,
@@ -44,12 +56,22 @@ function PortraitEditor(props) {
 
     return (
         <div>
-            <div>
-                {props.portraits.map((url, index) => (
-                    <Button onClick={() => {
-                        socket.emit('changePortrait', index);
-                        setSelected(index);
-                    }} disabled={selected == index}><img style={{opacity: selected == index ? 0.2 : 1}} className={classes.portrait} src={url} /></Button>
+            <div className={classes.portraitsLlist}>
+                {portraits.map((url, index) => (
+                    <div className={classes.portraitContainer}>
+                        <Button onClick={() => {
+                            socket.emit('changePortrait', index);
+                            setSelected(index);
+                        }} disabled={selected == index}><img style={{opacity: selected == index ? 0.2 : 1}} className={classes.portrait} src={url} /></Button>
+                        {index != 0 ? <IconButton onClick={() => {
+                            setPortraits([...portraits.slice(0, index), ...portraits.slice(index+1)]);
+                            if (selected > index)
+                                setSelected(selected-1);
+                            else if (selected == index)
+                                setSelected(0);
+                            socket.emit('deletePortrait', index);
+                        }}><DeleteIcon /></IconButton> : null}
+                    </div>
                 ))}
             </div>
             <IconButton onClick={addPortrait}><AddIcon /></IconButton>

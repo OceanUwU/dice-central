@@ -2,10 +2,12 @@ import React from 'react';
 import { Typography, Button, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import socket from '../socket';
+import showDialog from '../Dialog/show';
 import createChar from './createChar.js';
 import editChar from './editChar.js';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles({
     charContainer: {
@@ -24,6 +26,12 @@ const useStyles = makeStyles({
     char: {
         display: 'flex',
         flexDirection: 'column',
+    },
+
+    charOptions: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center'
     },
 
     img: {
@@ -50,7 +58,15 @@ function CharSelect(props) {
                                 <img src={char.portraits[char.portraitSelected]} className={classes.img} />
                             </div>
                         </Button>
-                        <IconButton onClick={() => editChar(char)}><EditIcon /></IconButton>
+                        <div className={classes.charOptions}>
+                            <IconButton onClick={() => editChar(char)}><EditIcon /></IconButton>
+                            {char.id == 'thedm' ? null : <IconButton onClick={() => showDialog({
+                                title: 'Really delete?',
+                                description: `Delete "${char.name}"?`,
+                                buttonText: 'delete',
+                                buttonAction: () => socket.emit('deleteChar', char.id),
+                            })}><DeleteIcon /></IconButton>}
+                        </div>
                     </div>
                 ))}
 

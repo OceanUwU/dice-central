@@ -39,6 +39,11 @@ io.on('connection', socket => {
         }
     });
 
+    socket.on('deleteChar', id => {
+        hub.characters = hub.characters.filter(char => char.id != id);
+        io.emit('refresh');
+    });
+
     socket.on('createPad', pad => {
         if (pad.length > 0)
             hub.createPad(pad);
@@ -65,6 +70,11 @@ io.on('connection', socket => {
     socket.on('changePortrait', index => {
         if (socket.character != null)
             socket.character.changePortrait(index);
+    });
+
+    socket.on('deletePortrait', index => {
+        if (socket.character != null)
+            socket.character.deletePortrait(index);
     });
 
     socket.on('disconnect', () => {

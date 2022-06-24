@@ -65,6 +65,15 @@ class Character {
         this.hub.sendInfoToAll();
     }
 
+    deletePortrait(index) {
+        this.portraits = [...this.portraits.slice(0, index), ...this.portraits.slice(index+1)];
+        if (this.portraitSelected > index)
+            this.portraitSelected -= 1;
+        else if (this.portraitSelected == index)
+            this.portraitSelected = 0;
+        this.hub.sendInfoToAll();
+    }
+
     get info() {
         let output = {};
         for (let i of storeDirectly)

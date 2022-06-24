@@ -30,8 +30,8 @@ class Hub {
             let character = new Character({
                 name: name,
                 owner: owner,
-                portraits: ['emptychar.png'],
-                portraitSelected: 0,
+                portraits: [0,1,2,3,4,5].map(n => `emptychar${n}.png`),
+                portraitSelected: Math.floor(Math.random() * 6),
                 dice: [],
             }, this);
             character.create();

@@ -3,8 +3,16 @@
         "id": "thedm",
         "name": "DM",
         "owner": "???",
-        "portraits": ["emptychar.png", "pencil.png"],
-        "portraitSelected": 1,
+        "portraits": [
+            "emptychar0.png",
+            "emptychar1.png",
+            "emptychar2.png",
+            "emptychar3.png",
+            "emptychar4.png",
+            "emptychar5.png",
+            "pencil.png"
+        ],
+        "portraitSelected": 6,
         "dice": []
     }],
     "pads": ["Log", "Notes"],
