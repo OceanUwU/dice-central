@@ -41,6 +41,7 @@ io.on('connection', socket => {
 
     socket.on('deleteChar', id => {
         hub.characters = hub.characters.filter(char => char.id != id);
+        hub.save();
         io.emit('refresh');
     });
 

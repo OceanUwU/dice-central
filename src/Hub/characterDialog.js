@@ -49,6 +49,18 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 10,
         padding: 3
     },
+    characterSelector: {
+        '& > button > span': {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+        }
+    },
+    portrait: {
+        width: 100,
+        height: 100,
+        objectFit: 'contain'
+    }
 }));
 
 function DialogCentre(props) {
@@ -58,6 +70,7 @@ function DialogCentre(props) {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+    let index = 0;
 
     return (
         <div className={classes.root}>
@@ -75,27 +88,41 @@ function DialogCentre(props) {
                 {props.self || props.amDM ? <Tab className={classes.tab} label="Inventory" /> : null}
                 {props.self || props.amDM ? <Tab className={classes.tab} label="Notes" /> : null}
                 {props.self ? <Tab className={classes.tab} label="Portrait" /> : null}
+                <Tab className={classes.tab} label="All Chars" />
             </Tabs>
-            <TabPanel classes={classes.tabPanel} value={value} index={0}>
+            <TabPanel classes={classes.tabPanel} value={value} index={index++}>
                 <iframe name="embed_readwrite" className={classes.pad} src={`${etherpadserver}/p/${props.character.id}_info`}></iframe>
             </TabPanel>
-            {props.self || props.amDM ? <TabPanel classes={classes.tabPanel} value={value} index={1}>
+            {props.self || props.amDM ? <TabPanel classes={classes.tabPanel} value={value} index={index++}>
                 <iframe name="embed_readwrite" className={classes.pad} src={`${etherpadserver}/p/${props.character.id}_inv`}></iframe>
             </TabPanel> : null}
-            {props.self || props.amDM ? <TabPanel classes={classes.tabPanel} value={value} index={2}>
+            {props.self || props.amDM ? <TabPanel classes={classes.tabPanel} value={value} index={index++}>
                 <iframe name="embed_readwrite" className={classes.pad} src={`${etherpadserver}/p/${props.character.id}_notes`}></iframe>
             </TabPanel> : null}
-            {props.self ? <TabPanel classes={classes.tabPanel} value={value} index={3}>
+            {props.self ? <TabPanel classes={classes.tabPanel} value={value} index={index++}>
                 <PortraitEditor {...props.character} />
             </TabPanel> : null}
+            <TabPanel classes={classes.tabPanel} value={value} index={index++}>
+                <div className={classes.characterSelector}>
+                    {props.hubInfo.characters.map(char => (
+                        <Button onClick={() => {
+                            setValue(0);
+                            showCharacterDialog(char, props.hubInfo, props.myName, props.amDM, 0);
+                        }}>
+                            <Typography>{char.name}</Typography>
+                            <img className={classes.portrait} src={char.portraits[char.portraitSelected]} />
+                        </Button>
+                    ))}
+                </div>
+            </TabPanel>
         </div>
     );
 };
 
-function showCharacterDialog(character, self, amDM, startingValue) {
+function showCharacterDialog(character, hubInfo, myName, amDM, startingValue) {
     showDialog({
         title: character.name
-    }, <DialogCentre character={character} self={self} amDM={amDM} startingValue={startingValue} />);
+    }, <DialogCentre character={character} hubInfo={hubInfo} myName={myName} self={myName == character.name} amDM={amDM} startingValue={startingValue} />);
 }
 
 export default showCharacterDialog;

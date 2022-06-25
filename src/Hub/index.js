@@ -154,9 +154,9 @@ function Character(props) {
                 ) : null}
             </div>
             <div className="buttons">
-                <IconButton title="character info" onClick={() => showCharacterDialog(props, isMe, amDM, 0)}><RecentActorsIcon fontSize="small" /></IconButton>
-                {isMe || amDM ? <IconButton title="inventory" onClick={() => showCharacterDialog(props, isMe, amDM, 1)}><LocalMallIcon fontSize="small" /></IconButton> : null}
-                {isMe || amDM ? <IconButton title="personal notes" onClick={() => showCharacterDialog(props, isMe, amDM, 2)}><NoteIcon fontSize="small" /></IconButton> : null}
+                <IconButton title="character info" onClick={() => showCharacterDialog(props, hubInfo, myName, amDM, 0)}><RecentActorsIcon fontSize="small" /></IconButton>
+                {isMe || amDM ? <IconButton title="inventory" onClick={() => showCharacterDialog(props, hubInfo, myName, amDM, 1)}><LocalMallIcon fontSize="small" /></IconButton> : null}
+                {isMe || amDM ? <IconButton title="personal notes" onClick={() => showCharacterDialog(props, hubInfo, myName, amDM, 2)}><NoteIcon fontSize="small" /></IconButton> : null}
             </div>
         </div>
     );

@@ -57,12 +57,12 @@ class Character {
 
     addPortrait(url) {
         this.portraits.push(url);
-        this.hub.sendInfoToAll();
+        this.hub.sendAndSave();
     }
 
     changePortrait(index) {
         this.portraitSelected = index;
-        this.hub.sendInfoToAll();
+        this.hub.sendAndSave();
     }
 
     deletePortrait(index) {
@@ -71,7 +71,7 @@ class Character {
             this.portraitSelected -= 1;
         else if (this.portraitSelected == index)
             this.portraitSelected = 0;
-        this.hub.sendInfoToAll();
+        this.hub.sendAndSave();
     }
 
     get info() {
