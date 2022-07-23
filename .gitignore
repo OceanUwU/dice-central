@@ -3,3 +3,4 @@
 /build/
 /node_modules/
 /src/Hub/etherpadserver.json
+/public/favicon.ico
