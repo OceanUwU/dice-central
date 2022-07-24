@@ -45,9 +45,9 @@ io.on('connection', socket => {
         io.emit('refresh');
     });
 
-    socket.on('createPad', pad => {
+    socket.on('createPad', (pad, type) => {
         if (pad.length > 0)
-            hub.createPad(pad);
+            hub.createPad(pad, type);
     });
 
     socket.on('changePad', (index, pad) => {

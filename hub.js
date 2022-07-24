@@ -1,5 +1,6 @@
 const fs = require('fs-extra');
 const Character = require('./character.js');
+const cfg = require('./cfg.json');
 const savePath = 'data/data.json';
 const storeDirectly = ['pads', 'openPads'];
 
@@ -41,9 +42,9 @@ class Hub {
         } else return false;
     }
 
-    createPad(pad) {
-        this.pads.push(pad);
-        this.pads.sort((a, b) => a.localeCompare(b));
+    createPad(pad, type) {
+        this.pads.push([pad, type]);
+        this.pads.sort((a, b) => a[0].localeCompare(b[0]));
         this.sendAndSave();
     }
 
@@ -53,10 +54,9 @@ class Hub {
     }
 
     deletePad(pad) {
-        if (this.pads.includes(pad)) {
-            this.pads = this.pads.filter(p => p !== pad);
-            if (this.openPads.includes(pad))
-                this.openPads = this.openPads.map(p => p === pad ? 'Notes' : p);
+        if (this.pads.find(p => p[0] == pad) != undefined) {
+            this.pads = this.pads.filter(p => p[0] !== pad);
+            this.openPads = this.openPads.map(p => p == pad ? 'Notes' : p);
             this.sendAndSave();
         }
     }
@@ -73,6 +73,7 @@ class Hub {
     get ingameInfo() {
         return {
             ...this.info,
+            wbo: cfg.randomWBOString,
             online: this.characters.filter(char => char.socket != null).map(char => char.name),
         };
     }

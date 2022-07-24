@@ -15,6 +15,6 @@
         "portraitSelected": 6,
         "dice": []
     }],
-    "pads": ["Log", "Notes"],
+    "pads": [["Log", 0], ["Notes", 0], ["Map", 1]],
     "openPads": ["Log", "Notes"]
 }

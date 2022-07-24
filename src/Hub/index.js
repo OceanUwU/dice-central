@@ -122,13 +122,15 @@ const useStyles = makeStyles({
 function Pad(props) {
     const classes = useStyles();
 
+    let pad = hubInfo.pads.find(p => p[0] == hubInfo.openPads[props.index]);
+
     return (
         <div className={classes.pad} style={props.style}>
             <Typography style={{textAlign: 'center'}}>
-                {hubInfo.openPads[props.index]}
+                {pad[0]}
                 <IconButton onClick={() => openChangePad(props.index)}><FolderOpenIcon /></IconButton>
             </Typography>
-            <iframe name="embed_readwrite" className={classes.padIframe} src={`${etherpadserver}/p/${hubInfo.openPads[props.index]}`}></iframe>
+            <iframe name="embed_readwrite" className={classes.padIframe} style={pad[1] == 0 ? {} : {background: '#485365'}} src={pad[1] == 0 ? `${etherpadserver}/p/${pad[0]}` : `https://wbo.ophir.dev/boards/${hubInfo.wbo}-${pad[0]}`}></iframe>
         </div>
     );
 }
